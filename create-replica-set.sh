@@ -173,16 +173,16 @@ function init_replica_set {
   docker exec -i $1 bash -c 'mongo < /data/admin/admin.js'
   cmd='mongo -u $MONGO_REPLICA_ADMIN -p $MONGO_PASS_REPLICA --eval "rs.status()" --authenticationDatabase "admin"'
   sleep 2
-  docker exec -i mongoMaster bash -c "$cmd"
+  docker exec -i mongoNode1 bash -c "$cmd"
 }
 
 function init_mongo_primary {
   # @params name-of-keyfile
   createKeyFile mongo-keyfile
   # @params server container volume
-  createMongoDBNode manager1 mongoMaster mongo_storage
+  createMongoDBNode manager1 mongoNode1 mongo_storage
   # @params container
-  init_replica_set mongoMaster
+  init_replica_set mongoNode1
   echo '·······························'
   echo '·  REPLICA SET READY TO ADD NODES ··'
   echo '·······························'
@@ -204,8 +204,8 @@ function check_status {
 function main {
   init_mongo_primary
   init_mongo_secondaries
-  add_replicas manager1 mongoMaster
-  check_status manager1 mongoMaster
+  add_replicas manager1 mongoNode1
+  check_status manager1 mongoNode1
 }
 
 main
