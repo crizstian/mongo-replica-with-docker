@@ -190,8 +190,8 @@ function init_mongo_primary {
 
 function init_mongo_secondaries {
   # @Params server container volume
-  createMongoDBNode worker1 mongoNode1 mongo_storage
-  createMongoDBNode worker2 mongoNode2 mongo_storage
+  createMongoDBNode worker1 mongoNode2 mongo_storage
+  createMongoDBNode worker2 mongoNode3 mongo_storage
 }
 
 # @params server primary-mongo-container
