@@ -11,4 +11,4 @@ is a walkthrough in how to set up a MongoDB replica set with authentication usin
 
 ## Medium article
 
-- [How to deploy a MongoDB Replica Set using Docker]()
+- [How to deploy a MongoDB Replica Set using Docker](https://medium.com/@cramirez92/how-to-deploy-a-mongodb-replica-set-using-docker-6d0b9ac00e49#.edhf2v3g0)
