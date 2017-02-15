@@ -1,0 +1,5 @@
+MONGO_USER_ADMIN=cristian
+MONGO_PASS_ADMIN=cristianPassword2017
+
+MONGO_REPLICA_ADMIN=replicaAdmin
+MONGO_PASS_REPLICA=replicaAdminPassword2017
