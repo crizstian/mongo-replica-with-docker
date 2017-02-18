@@ -42,6 +42,8 @@ function copyFilesToContainer {
   docker cp ./admin.js $1:/data/admin/
   docker cp ./replica.js $1:/data/admin/
   docker cp ./mongo-keyfile $1:/data/keyfile/
+  docker cp ./grantRole.js $1:/tmp
+  docker cp ./movies.js $1:/tmp
 }
 
 # @params container volume
@@ -174,6 +176,8 @@ function init_replica_set {
   cmd='mongo -u $MONGO_REPLICA_ADMIN -p $MONGO_PASS_REPLICA --eval "rs.status()" --authenticationDatabase "admin"'
   sleep 2
   docker exec -i mongoNode1 bash -c "$cmd"
+  sleep 2
+  docker exec -it mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/grantRole.js'
 }
 
 function init_mongo_primary {
@@ -201,11 +205,16 @@ function check_status {
   docker exec -i $2 bash -c "$cmd"
 }
 
+function add_moviesdb_test {
+  docker exec -it mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/movies.js'
+}
+
 function main {
   init_mongo_primary
   init_mongo_secondaries
   add_replicas manager1 mongoNode1
   check_status manager1 mongoNode1
+  add_moviesdb_test
 }
 
 main
