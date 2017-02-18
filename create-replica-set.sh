@@ -81,7 +81,7 @@ function removeAndCreateContainer {
   echo '·· recreating container >>>> '$1' ··'
 
   #create container with sercurity and replica configuration
-  docker run --name $1 --hostname $1 \
+  docker run --restart=unless-stopped --name $1 --hostname $1 \
   -v $2:/data \
   --env-file $env \
   $serv \
