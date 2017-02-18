@@ -42,8 +42,8 @@ function copyFilesToContainer {
   docker cp ./admin.js $1:/data/admin/
   docker cp ./replica.js $1:/data/admin/
   docker cp ./mongo-keyfile $1:/data/keyfile/
-  docker cp ./grantRole.js $1:/tmp
-  docker cp ./movies.js $1:/tmp
+  docker cp ./grantRole.js $1:/data/admin
+  docker cp ./movies.js $1:/data/admin
 }
 
 # @params container volume
@@ -204,9 +204,9 @@ function check_status {
 }
 
 function add_moviesdb_test {
-  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/grantRole.js'
+  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /data/admin/grantRole.js'
   sleep 1
-  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/movies.js'
+  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /data/admin/movies.js'
 }
 
 function main {
