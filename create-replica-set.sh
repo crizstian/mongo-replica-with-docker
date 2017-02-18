@@ -176,8 +176,6 @@ function init_replica_set {
   cmd='mongo -u $MONGO_REPLICA_ADMIN -p $MONGO_PASS_REPLICA --eval "rs.status()" --authenticationDatabase "admin"'
   sleep 2
   docker exec -i mongoNode1 bash -c "$cmd"
-  sleep 2
-  docker exec -it mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/grantRole.js'
 }
 
 function init_mongo_primary {
@@ -206,7 +204,9 @@ function check_status {
 }
 
 function add_moviesdb_test {
-  docker exec -it mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/movies.js'
+  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/grantRole.js'
+  sleep 1
+  docker exec -i mongoNode1 bash -c 'mongo -u $MONGO_USER_ADMIN -p $MONGO_PASS_ADMIN --authenticationDatabase "admin" < /tmp/movies.js'
 }
 
 function main {
