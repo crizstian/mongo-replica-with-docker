@@ -54,7 +54,7 @@ function configMongoContainer {
   createDockerVolume $2
 
   # start container
-  docker run --name $1 -v $2:/data -d mongo --smallfiles
+  docker run --name $1 -v $2:/data -d mongo:3.4.1 --smallfiles
 
   # create the folders necessary for the container
   docker exec -i $1 bash -c 'mkdir /data/keyfile /data/admin'
@@ -88,7 +88,7 @@ function removeAndCreateContainer {
   --env-file $env \
   $serv \
   -p $port \
-  -d mongo --smallfiles \
+  -d mongo:3.4.1 --smallfiles \
   --keyFile /data/keyfile/$keyfile \
   --replSet $rs \
   --storageEngine wiredTiger \
